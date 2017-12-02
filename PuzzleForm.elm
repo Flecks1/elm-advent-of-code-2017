@@ -11,15 +11,15 @@ import Utils.Html as Html
 -- Init
 
 
-type alias Model inputType =
+type alias Model outputType =
     { input : String
-    , decodedInput : Maybe (Result String inputType)
+    , output : Maybe (Result String outputType)
     }
 
 
 init : Model inputType
 init =
-    { input = "", decodedInput = Nothing }
+    { input = "", output = Nothing }
 
 
 
@@ -31,20 +31,14 @@ type Msg
     | SubmitInput
 
 
-update : Decoder dataType -> Msg -> Model dataType -> Model dataType
-update inputDecoder msg model =
+update : (String -> Result String outputType) -> Msg -> Model outputType -> Model outputType
+update fn msg model =
     case msg of
         InputText newInput ->
             { model | input = newInput }
 
         SubmitInput ->
-            { model
-                | decodedInput =
-                    model.input
-                        |> Decode.decodeString inputDecoder
-                        |> Result.mapError (always "The input provided is not valid")
-                        |> Just
-            }
+            { model | output = Just (fn model.input) }
 
 
 
@@ -56,8 +50,8 @@ update inputDecoder msg model =
     (,)
 
 
-view : (dataType -> Result String output) -> Model dataType -> Html Msg
-view fn model =
+view : Model outputType -> Html Msg
+view model =
     div []
         [ p []
             [ label [ style [ "display" => "block" ] ]
@@ -68,8 +62,8 @@ view fn model =
                 ]
             , button [ onClick SubmitInput ] [ text "Submit" ]
             ]
-        , model.decodedInput
-            |> Html.maybeToHtml (Result.andThen fn >> Result.unpack errorView outputView)
+        , model.output
+            |> Html.maybeToHtml (Result.unpack errorView outputView)
         ]
 
 
@@ -87,10 +81,10 @@ errorView error =
 -- Make
 
 
-make : { r | implementation : dataType -> Result String output, inputDecoder : Decoder dataType } -> Program Never (Model dataType) Msg
-make { implementation, inputDecoder } =
+make : (String -> Result String outputType) -> Program Never (Model outputType) Msg
+make puzzleImplementation =
     Html.beginnerProgram
         { model = init
-        , view = view implementation
-        , update = update inputDecoder
+        , view = view
+        , update = update puzzleImplementation
         }

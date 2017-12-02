@@ -1,6 +1,5 @@
 module Main exposing (main)
 
-import Json.Decode as Decode exposing (Decoder)
 import Maybe.Extra as Maybe
 import PuzzleForm
 import Utils.Char as Char
@@ -9,21 +8,12 @@ import Utils.Char as Char
 -- Puzzle relative
 
 
-type alias Input =
-    String
-
-
 type alias Output =
     Int
 
 
-inputDecoder : Decoder Input
-inputDecoder =
-    Decode.string
-
-
-puzzleFunction : Input -> Result String Output
-puzzleFunction input =
+puzzleImplementation : String -> Result String Output
+puzzleImplementation input =
     input
         |> String.toList
         |> Maybe.traverse Char.toInt
@@ -63,9 +53,6 @@ calculateSumOfAllNumbersThatMatchTheirSuccessor intList =
 -- Main
 
 
-main : Program Never (PuzzleForm.Model Input) PuzzleForm.Msg
+main : Program Never (PuzzleForm.Model Output) PuzzleForm.Msg
 main =
-    PuzzleForm.make
-        { implementation = puzzleFunction
-        , inputDecoder = inputDecoder
-        }
+    PuzzleForm.make puzzleImplementation
