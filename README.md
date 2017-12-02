@@ -1,1 +1,1 @@
-My own implementation in [Elm](http://elm-lang.org/) to solve the challenges of the [Advent of Code 2017](http://adventofcode.com/2017).
+My own implementations, in [Elm](http://elm-lang.org/), of the solutions to the challenges of the [Advent of Code 2017](http://adventofcode.com/2017).
