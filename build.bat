@@ -1,6 +1,7 @@
 @echo off
 for %%x in (
-    DayOne/
+    DayOne/FirstChallenge/
+    DayOne/SecondChallenge/
 ) do (
     echo Building %%xMain.elm
     elm-make %%xMain.elm --output=%%xindex.html
