@@ -52,15 +52,33 @@ update fn msg model =
 
 view : Model outputType -> Html Msg
 view model =
-    div []
+    div [ style [ "padding" => "30px" ] ]
         [ p []
             [ label [ style [ "display" => "block" ] ]
-                [ text "Input:"
+                [ text "INPUT:"
                 , textarea
-                    [ onInput InputText, style [ "display" => "block" ] ]
+                    [ onInput InputText
+                    , rows 16
+                    , style
+                        [ "display" => "block"
+                        , "border-radius" => "5px"
+                        , "resize" => "none"
+                        , "width" => "100%"
+                        , "outline" => "0"
+                        , "max-width" => "800px"
+                        , "padding" => "5px"
+                        ]
+                    ]
                     [ text model.input ]
                 ]
-            , button [ onClick SubmitInput ] [ text "Submit" ]
+            , button
+                [ onClick SubmitInput
+                , style
+                    [ "padding" => "8px 16px"
+                    , "margin-top" => "10px"
+                    ]
+                ]
+                [ text "Submit" ]
             ]
         , model.output
             |> Html.maybeToHtml (Result.unpack errorView outputView)
