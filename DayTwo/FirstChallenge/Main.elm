@@ -15,20 +15,15 @@ type alias Output =
 puzzleImplementation : String -> Result String Output
 puzzleImplementation input =
     input
-        |> toRows
+        |> String.lines
         |> List.map (toInts >> differenceBetweenMinAndMax)
         |> List.sum
         |> Ok
 
 
-toRows : String -> List String
-toRows =
-    String.split "\n"
-
-
 toInts : String -> List Int
 toInts =
-    String.split "\t"
+    String.words
         >> Maybe.traverse (String.toInt >> Result.toMaybe)
         >> Maybe.withDefault []
 
