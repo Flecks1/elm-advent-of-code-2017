@@ -43,10 +43,6 @@ writeValuesUntilTargetIsSurpassed memoryId cache target =
                     List.sum nonEmptyList
     in
     if valueToBeWritten > target then
-        let
-            _ =
-                Debug.log "endingCache" cache
-        in
         valueToBeWritten
     else
         writeValuesUntilTargetIsSurpassed (memoryId + 1) (cache |> Dict.insert memoryLocation valueToBeWritten) target
