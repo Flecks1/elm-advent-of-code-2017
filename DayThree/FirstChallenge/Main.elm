@@ -35,7 +35,7 @@ getLocationOfMemory memoryId =
         orderInSegment =
             orderOnLayer - segmentNumber * segmentLength
     in
-    if memoryId == 1 then
+    if memoryId <= 1 then
         ( 0, 0 )
     else if segmentNumber == 0 then
         ( layer, layer - orderInSegment )
