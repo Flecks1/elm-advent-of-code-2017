@@ -8,6 +8,8 @@ for %%x in (
     DayThree/SecondChallenge/
     DayFour/FirstChallenge/
     DayFour/SecondChallenge/
+    DayFive/FirstChallenge/
+    DayFive/SecondChallenge/
 ) do (
     echo Building %%xMain.elm
     elm-make %%xMain.elm --output=%%xindex.html
