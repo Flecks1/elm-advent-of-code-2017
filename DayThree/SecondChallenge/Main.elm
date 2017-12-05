@@ -1,7 +1,6 @@
 module Main exposing (main)
 
 import Dict exposing (Dict)
-import Maybe.Extra as Maybe
 import PuzzleForm
 
 
@@ -31,8 +30,7 @@ writeValuesUntilTargetIsSurpassed memoryId cache target =
 
         surroundingValues =
             getSurroundingLocations memoryLocation
-                |> List.map (flip Dict.get cache)
-                |> Maybe.values
+                |> List.filterMap (flip Dict.get cache)
 
         valueToBeWritten =
             case surroundingValues of
